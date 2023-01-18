@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Наблюдение.</title>
+</head>
+<body>
+    <ul>
+        {% for source in source_list %}
+        <li>{{source.name}}</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'app:addSource' %}">Добавить источник</a>
+</body>
+</html>
