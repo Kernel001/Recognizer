@@ -1,15 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Наблюдение.</title>
-</head>
-<body>
-    <ul>
-        {% for source in source_list %}
-        <li>{{source.name}}</li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'app:addSource' %}">Добавить источник</a>
-</body>
-</html>
+{% extends 'app/base.html' %}
+{% block sources %}
+    <table class="table table-dark table-hover table-sm align-middle caption-top">
+        <caption>Источники трансляции</caption>
+        <thead>
+            <tr>
+                <th scope="col" >IP адрес</th>
+                <th scope="col">Наименование</th>
+                <th scope="col">Канал трансляции</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            {% for source in source_list %}
+            <tr>
+                <td >{{source.ip_adress}}</td>
+                <td>{{source.name}}</td>
+                <td>{{source.video_feed_name}}</td>
+                <td><a class="btn btn-danger btn-sm" href="{% url 'app:removeSource' source.id %}">Удалить</a></td>
+                <td><a class="btn btn-primary btn-sm" href="{% url 'app:selectSource' source.id %}">Включить</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="d-grid gap-2">
+    <a href="{% url 'app:addSource' %}" class="btn btn-primary">Добавить источник</a>
+    </div>
+{% endblock %}
+
+{% block targets %}
+Targets
+{% endblock %}
+
+{% block encounter %}
+Encounted
+{% endblock %}
+
+{% block live %}
+    {% comment %}<img src = "{% url 'app:videoFeed' %}"> {% endcomment %}
+{% endblock %}

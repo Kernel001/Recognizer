@@ -1,0 +1,19 @@
+{% extends 'app/base.html' %}
+{% block title %}Добавление нового источника {% endblock %}
+{% block body %}
+<form action = "{% url 'app:addSource' %}" method = "post">
+    {% csrf_token %}
+    <fieldset>
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        <label for="ipAdress">IP адрес</label>
+        <input id="ipAdress" type="text" name = "ip"><br>
+
+        <label for="descr">Наименование</label>
+        <input id="descr" type="text" name = "descr"><br>
+
+        <label for="feedName">Имя потока</label>
+        <input id="feedName" type="text" name = "feed"><br>
+    </fieldset>
+    <input type="submit" value="Save">
+</form>
+{% endblock %}

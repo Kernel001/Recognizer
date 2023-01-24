@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'app/css/bootstrap.min.css' %}">
+    <script src="{% static 'app/js/bootstrap.bundle.min.js' %}"></script>
+    <title>{% block title %}OBSERVER v0.1 Наблюдение.{% endblock %}</title>
+</head>
+<body>
+{% block body %}
+    <div id="root" class="container-fluid">
+        <div class="row">
+            <div id = "encounter" class="col-md-4">
+              {% block encounter %} Encounter {% endblock %}
+            </div>
+
+            <div id="source-target" class="col-md-4">
+                <div id = "sources" class="container">
+                  {% block sources %} Source {% endblock %}
+                </div>
+                <div id = "targets" class="container">
+                  {% block targets %} Target {% endblock %}
+                </div>
+            </div>
+
+            <div id="video" class="col-md-4">
+                <div id = "live" class="container">
+                  {% block live %} Live {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+    <script type="text/javascript">
+        let url = `ws://${window.location.host}/ws/socket-server/`
+        const liveSocket = new WebSocket(url)
+        
+        liveSocket.onmessage = function(e){
+          console.log("Message recieved!")
+          console.log(e.data)
+          let data = JSON.parse(e.data)
+          console.log('text:', data)
+        }
+    </script>
+</body>
+</html>

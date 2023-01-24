@@ -1,0 +1,4 @@
+Django
+redis (+apt install)
+channels-redis
+python -m pip install -U channels["daphne"]
