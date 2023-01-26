@@ -21,6 +21,10 @@
 
 {% block targets %}
 Targets
+<div class="d-grid gap-2">
+    <button type="button" data-bs-toggle="modal" data-bs-target="#addTargetModal" class="btn btn-primary">Добавить цель наблюдения</button>
+</div>
+{% include 'app/addTargetModal.html' %}
 {% endblock %}
 
 {% block encounter %}

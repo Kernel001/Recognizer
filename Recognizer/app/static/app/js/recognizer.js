@@ -6,6 +6,21 @@ liveSocket.onmessage = function(e){
   console.log(e.data)
 }
 
+function openNewPhoto(){
+    pic = document.getElementById('photo')
+    imgPath = document.getElementById('formFile').files[0]
+    pic.classList.add("obj")
+    pic.file=imgPath
+
+    var reader = new FileReader()
+    reader.onload = (function(aImg) {return function(e) {aImg.src = e.target.result}})(pic)
+    reader.readAsDataURL(imgPath)
+}
+
+function startSourceClick(sourceID){
+    console.log(`Starting source: ${sourceID}`)
+}
+
 function addSourceClick() {
   console.log("new source clicked!")
   if (liveSocket == undefined) {

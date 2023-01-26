@@ -1,0 +1,21 @@
+<div class="modal fade" id="addTargetModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Добавление новой цели наблюдения</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+      </div>
+      <div class="modal-body">
+          <label for="targetName" class="form-label">Имя цели</label>
+          <input id="targetName" type="text" name = "ip" class="form-control"><br>
+          <label for="formFile" class="form-label">Фотография цели</label>
+          <input id="formFile" class="form-control" type="file" onchange="openNewPhoto()">
+          <img id="photo" src="" class="img-fluid" alt="Responsive image">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+        <button id="addTargetBtn" onclick="addTargetClick()" type="button" class="btn btn-primary" data-bs-dismiss="modal">Сохранить изменения</button>
+      </div>
+    </div>
+  </div>
+</div>

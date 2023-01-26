@@ -4,6 +4,6 @@
     <td>{{source.name}}</td>
     <td>{{source.video_feed_name}}</td>
     <td><a class="btn btn-danger btn-sm" href="{% url 'app:removeSource' source.id %}">Удалить</a></td>
-    <td><a class="btn btn-primary btn-sm" href="{% url 'app:selectSource' source.id %}">Включить</a></td>
+    <td><button id="startSourceBtn" class="btn btn-primary btn-sm" onclick="startSourceClick({{ source.id }})">Включить</button></td>
 </tr>
 {% endfor %}
