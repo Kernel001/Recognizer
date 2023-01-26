@@ -25,35 +25,9 @@ def index(request):
     context = {'source_list': sourceList}
     return render(request, 'app/index.html', context)
 
-
 def dayEncounter(request, **kwargs):
     response = "Encountered target in day %s"
     return HttpResponse(response % kwargs['encDay'])
-
-
-def addSource(request):
-    if (request.method == "POST"):
-        try:
-            match = re.match(r"^(?:25[0-5]|2[0-4]\d|[0-1]?\d{1,2})(?:\.(?:25[0-5]|2[0-4]\d|[0-1]?\d{1,2})){3}$",
-                             request.POST['ip'])
-            if match is None:
-                return render(request, 'app/addSource.html', {
-                    'error_message': 'IP адрес не соответствует шаблону!',
-                })
-
-            newSource = Source.objects.create(ip_adress=request.POST['ip'],
-                               video_feed_name=request.POST['feed'],
-                               name=request.POST['descr'])
-            newSource.save()
-        except (KeyError):
-            return render(request, 'app/addSource.html', {
-                'error_message': 'Не все данные были заполнены!',
-            })
-        else:
-            return HttpResponseRedirect(reverse('app:index'))
-    if (request.method == "GET"):
-        return render(request, 'app/addSource.html')
-
 
 def removeSource(request, **kwargs):
     instance = Source.objects.get(id=kwargs['id'])
@@ -64,6 +38,10 @@ def selectSource(request, **kwargs):
     instance = Source.objects.get(id=kwargs['id'])
     return HttpResponseRedirect(reverse('app:index'))
 
+def sources(request, **kwargs):
+    sourceList = Source.objects.all()
+    context = {'source_list': sourceList}
+    return render(request, 'app/sourceContent.html', context)
 
 def addTarget(request):
     return HttpResponse("Adding new target")

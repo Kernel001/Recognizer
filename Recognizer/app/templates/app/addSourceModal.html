@@ -1,0 +1,24 @@
+<div class="modal fade" id="addSourceModel" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Добавление нового источника</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+      </div>
+      <div class="modal-body">
+            <label for="ipAdress" class="form-label">IP адрес</label>
+            <input id="ipAdress" type="text" name = "ip" class="form-control"><br>
+
+            <label for="descr" class="form-label">Наименование</label>
+            <input id="descr" type="text" name = "descr" class="form-control"><br>
+
+            <label for="feedName" class="form-label">Имя потока</label>
+            <input id="feedName" type="text" name = "feed" class="form-control"><br>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+        <button id="addSourceBtn" onclick="addSourceClick()" type="button" class="btn btn-primary" data-bs-dismiss="modal">Сохранить изменения</button>
+      </div>
+    </div>
+  </div>
+</div>

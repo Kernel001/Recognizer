@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     {% load static %}
     <link rel="stylesheet" href="{% static 'app/css/bootstrap.min.css' %}">
+    <script src="{% static 'app/js/recognizer.js' %}"></script>
     <script src="{% static 'app/js/bootstrap.bundle.min.js' %}"></script>
     <title>{% block title %}OBSERVER v0.1 Наблюдение.{% endblock %}</title>
 </head>
@@ -32,16 +33,5 @@
         </div>
     </div>
 {% endblock %}
-    <script type="text/javascript">
-        let url = `ws://${window.location.host}/ws/socket-server/`
-        const liveSocket = new WebSocket(url)
-        
-        liveSocket.onmessage = function(e){
-          console.log("Message recieved!")
-          console.log(e.data)
-          let data = JSON.parse(e.data)
-          console.log('text:', data)
-        }
-    </script>
 </body>
 </html>

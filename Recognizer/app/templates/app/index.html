@@ -9,21 +9,14 @@
                 <th scope="col">Канал трансляции</th>
             </tr>
         </thead>
-        <tbody class="table-group-divider">
-            {% for source in source_list %}
-            <tr>
-                <td >{{source.ip_adress}}</td>
-                <td>{{source.name}}</td>
-                <td>{{source.video_feed_name}}</td>
-                <td><a class="btn btn-danger btn-sm" href="{% url 'app:removeSource' source.id %}">Удалить</a></td>
-                <td><a class="btn btn-primary btn-sm" href="{% url 'app:selectSource' source.id %}">Включить</a></td>
-            </tr>
-            {% endfor %}
+        <tbody class="table-group-divider" id="sourceTable">
+            {% include 'app/sourceContent.html' %}
         </tbody>
     </table>
     <div class="d-grid gap-2">
-    <a href="{% url 'app:addSource' %}" class="btn btn-primary">Добавить источник</a>
+        <button type="button" data-bs-toggle="modal" data-bs-target="#addSourceModel" class="btn btn-primary">Добавить источник</button>
     </div>
+    {% include 'app/addSourceModal.html' %}
 {% endblock %}
 
 {% block targets %}

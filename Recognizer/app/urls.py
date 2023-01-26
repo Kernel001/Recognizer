@@ -5,8 +5,7 @@ app_name = 'app'
 urlpatterns = [
     path('', views.index, name='index'),
     path('removeSource/<int:id>/', views.removeSource, name='removeSource'),
-    path('selectSource/<int:id>/', views.selectSource, name='selectSource'),
-    path('addSource/', views.addSource, name='addSource'),
+    path('sources/', views.sources, name='sources'),
 
     path('video_feed', views.videoFeed, name="videoFeed"),
 

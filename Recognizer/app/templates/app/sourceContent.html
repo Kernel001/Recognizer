@@ -1,0 +1,9 @@
+{% for source in source_list %}
+<tr>
+    <td >{{source.ip_adress}}</td>
+    <td>{{source.name}}</td>
+    <td>{{source.video_feed_name}}</td>
+    <td><a class="btn btn-danger btn-sm" href="{% url 'app:removeSource' source.id %}">Удалить</a></td>
+    <td><a class="btn btn-primary btn-sm" href="{% url 'app:selectSource' source.id %}">Включить</a></td>
+</tr>
+{% endfor %}
