@@ -4,10 +4,9 @@ from django.urls import reverse
 from django.views import generic
 
 from .camera import VideoCamera
-from .models import Source
+from .models import Source, Target
 
 import re
-
 
 class SourceDetailView(generic.DetailView):
     model = Source
@@ -22,7 +21,9 @@ class SourceListView(generic.ListView):
 # Create your views here.
 def index(request):
     sourceList = Source.objects.all()
-    context = {'source_list': sourceList}
+    targetsList = Target.objects.all()
+    context = {'source_list': sourceList,
+               'target_list': targetsList }
     return render(request, 'app/index.html', context)
 
 def dayEncounter(request, **kwargs):
@@ -43,9 +44,14 @@ def sources(request, **kwargs):
     context = {'source_list': sourceList}
     return render(request, 'app/sourceContent.html', context)
 
-def addTarget(request):
-    return HttpResponse("Adding new target")
-
+def removeTarget(request, **kwargs):
+    instance = Target.objects.get(id=kwargs['id'])
+    instance.delete()
+    return HttpResponseRedirect(reverse('app:index'))
+def targets(request, **kwargs):
+    targetList = Target.objects.all()
+    context = {'target_list': targetList}
+    return render(request, 'app/targetContent.html', context)
 
 def gen(camera):
     while True:

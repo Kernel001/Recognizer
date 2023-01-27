@@ -12,7 +12,9 @@ class Source(models.Model):
 class Target(models.Model):
     target_name = models.CharField(max_length=150)
     target_photo = models.BinaryField()
-
+    target_recognizer_photo = models.BinaryField()
+    targer_reco_vector = models.BinaryField()
+    target_photo_info=models.CharField(max_length=150)
     def __str__(self):
         return self.target_name
 

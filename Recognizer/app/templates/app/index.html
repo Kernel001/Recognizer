@@ -1,7 +1,8 @@
 {% extends 'app/base.html' %}
 {% block sources %}
+<div class="overflow-y-auto">
     <table class="table table-dark table-hover table-sm align-middle caption-top">
-        <caption>Источники трансляции</caption>
+        <caption>Источники трансляции:</caption>
         <thead>
             <tr>
                 <th scope="col" >IP адрес</th>
@@ -17,10 +18,14 @@
         <button type="button" data-bs-toggle="modal" data-bs-target="#addSourceModel" class="btn btn-primary">Добавить источник</button>
     </div>
     {% include 'app/addSourceModal.html' %}
+</div>
 {% endblock %}
 
 {% block targets %}
-Targets
+<caption>Цели поиска:</caption>
+<div id="targetsTable" class="overflow-y-auto" style="height:600px;">
+{% include 'app/targetContent.html' %}
+</div>
 <div class="d-grid gap-2">
     <button type="button" data-bs-toggle="modal" data-bs-target="#addTargetModal" class="btn btn-primary">Добавить цель наблюдения</button>
 </div>

@@ -1,0 +1,17 @@
+{% for target in target_list %}
+<div class="card" id="id{{target.id}}">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="data:image/jpg;base64,{{target.target_photo.decode}}" class="img-fluid">
+        </div>
+        <div class="col-md-6">
+            <img src="data:image/jpg;base64,{{target.target_recognizer_photo.decode}}" class="img-fluid">
+        </div>
+    </div>
+    <div class="card-body">
+        <h5 class = "card-title">{{target.target_name}}</h5>
+        <p class="card-text"></p>
+        <a class="btn btn-danger btn-sm" href="{% url 'app:removeTarget' target.id %}">Удалить</a>
+    </div>
+</div>
+{% endfor %}
