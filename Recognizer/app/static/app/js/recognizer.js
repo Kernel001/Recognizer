@@ -1,9 +1,13 @@
 let url = `ws://${window.location.host}/ws/socket-server/`
 const liveSocket = new WebSocket(url)
 
-liveSocket.onmessage = function(e){
-  console.log("Message recieved!")
-  console.log(e.data)
+liveSocket.onmessage = function(e) {
+  //console.log(e.data)
+  canvas = document.getElementById('canvasLive')
+  const ctx = canvas.getContext("2d")
+  createImageBitmap(e.data).then((bitmap) => {
+    ctx.drawImage(bitmap, 0, 0)
+  })
 }
 
 function openNewPhoto(){
@@ -19,6 +23,29 @@ function openNewPhoto(){
 
 function startSourceClick(sourceID){
     console.log(`Starting source: ${sourceID}`)
+    liveSocket.send(JSON.stringify({
+        "oper": "stream.stop"}))
+
+    liveSocket.send(JSON.stringify({
+        "oper": "stream.start",
+        "data": {
+            "sourceID": sourceID
+        }
+    }))
+
+    rows = document.getElementsByClassName('btn-warning')
+    for (const btn of rows){
+      if(btn.id != undefined){
+        if(btn.id.includes("startSourceBtn")){
+          btn.className = "btn btn-primary btn-sm"
+          btn.textContent = "Включить"
+        }
+      }
+    }
+
+    btn = document.getElementById(`startSourceBtn${sourceID}`)
+    btn.className = "btn btn-warning btn-sm"
+    btn.textContent = "LIVE"
 }
 
 function addTargetClick(){

@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from django.contrib.staticfiles import finders
 
-class RecoUtils():
+class RecoUtils:
     def __init__(self):
         print("Creating RecoUtils")
 
@@ -16,13 +16,48 @@ class RecoUtils():
         img = cv2.GaussianBlur(img, (7, 7), 0)
 
         box = self.getDetectedFace(img)
-        feature = self.getRecoVector(img, box)
-
-        cv2.rectangle(img, (box[0], box[1]), (box[0] + box[2], box[1] + box[3]), (0, 255, 0), 1)
-        cv2.putText(img, tag, (box[0], box[1]+20), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+        if box is not None:
+            img = self.drawFaceRect(img, box, tag)
+        else:
+            img = self.drawError(img, "NO FACE DETECTED")
 
         retImg = cv2.imencode(".jpg", img)[1]
         return retImg
+    def drawError(self, img, message):
+        height, width, channels = img.shape
+        cv2.rectangle(img, (0, 0), (width, height), (0, 0, 255), 5)
+        cv2.rectangle(img, (0, height), (width, 0), (0, 0, 255), 5)
+        cv2.putText(img, message, (5, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 3)
+        return img
+    def drawFaceRect(self, img, box, tag="undef", perfData = None):
+        if box is not None:
+            cv2.rectangle(img, (box[0], box[1]), (box[0] + box[2], box[1] + box[3]), (0, 255, 0), 1)
+            cv2.putText(img, tag, (box[0], box[1]+20), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+        if perfData is not None:
+            # {'getFrame': 0, 'faceDetect': 0, 'vectorCalc': 0, 'imProcess': 0, 'send': 0}
+            cv2.putText(img, "getFrame: {}".format(perfData['getFrame']),
+                        (0, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 3)
+            cv2.putText(img, "faceDetect: {}".format(perfData['faceDetect']),
+                        (0, 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 3)
+            cv2.putText(img, "vectorCalc: {}".format(perfData['vectorCalc']),
+                        (0, 90), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 3)
+            cv2.putText(img, "imProcess: {}".format(perfData['imProcess']),
+                        (0, 120), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 3)
+            cv2.putText(img, "send: {}".format(perfData['send']),
+                        (0, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 3)
+            cv2.putText(img, "getFrame: {}".format(perfData['getFrame']),
+                        (0, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 1)
+            cv2.putText(img, "faceDetect: {}".format(perfData['faceDetect']),
+                        (0, 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 1)
+            cv2.putText(img, "vectorCalc: {}".format(perfData['vectorCalc']),
+                        (0, 90), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 1)
+            cv2.putText(img, "imProcess: {}".format(perfData['imProcess']),
+                        (0, 120), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 1)
+            cv2.putText(img, "send: {}".format(perfData['send']),
+                        (0, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 1)
+
+        return img
+
     def getDetectedFace(self, image):
         imgWidth = int(image.shape[1])
         imgHeight = int(image.shape[0])
@@ -39,10 +74,13 @@ class RecoUtils():
     def getRecoVector(self, image, box=None):
         if box is None:
             box = self.getDetectedFace(image)
+        if box is None:
+            return None
         roi_img = image[box[1]: box[1] + box[3], box[0]: box[0] + box[2]]
         feature = self.recognizer.feature(roi_img)
+        return feature
 
-    def image_resize(image, width = None, height = None, inter = cv2.INTER_AREA):
+    def image_resize(self, image, width=None, height=None, inter=cv2.INTER_AREA):
         dim = None
         (h, w) = image.shape[:2]
         if width is None and height is None:
